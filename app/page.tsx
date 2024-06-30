@@ -1,5 +1,5 @@
 import Image from "next/image";
-import QueryForm from "@/components/QueryForm";
+import QueryForm from "@/components/FormComponents/QueryForm";
 import ResumeUploader from "@/components/ResumeUploader";
 import ResumeContainer from "@/components/ResumeContainer";
 

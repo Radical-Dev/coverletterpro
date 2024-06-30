@@ -9,34 +9,17 @@ import {
 import { FaPlusSquare } from "react-icons/fa";
 import ApplicantData from "./ApplicantData";
 import EmployerData from "./EmployerData";
-import FormContextProvider from "./Providers/FormContextProvider";
+import FormContextProvider from "../Providers/FormContextProvider";
+import PDFExporter from "./PDFExporter";
 
 type formfields = {
   jobDescription?: string;
 };
 
 export default function QueryForm() {
-  // let adForm: addressForm = {
-  //   applicantAddress: [
-  //     {
-  //       name: document.querySelector<HTMLInputElement>(
-  //         'input[name="applicantName"]'
-  //       ).name,
-  //       value: document.getElementById("fieldList").value,
-  //     },
-  //   ],
-  // };
   const [formState, setFormState] = useState<formfields>({});
-  const [coverLetterState, setCoverLetterState] = useState();
+  const [coverLetterState, setCoverLetterState] = useState("");
   const [loadingState, setLoadingState] = useState(false);
-
-  // const addField = (element: HTMLInputElement) => {
-  //   setAddressState((prevState) =>{
-  //     return {...prevState,
-  //       prevState.applicantAddress.push({name:[element.name], value:element.value})
-  //     }
-  //   })
-  // };
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setLoadingState(true);
@@ -95,12 +78,14 @@ export default function QueryForm() {
           <ApplicantData />
           <EmployerData />
           <div className="mt-8 bg-neutral card min-h-60 shadow w-full p-4 text-neutral-content">
-            {coverLetterState}
+            {coverLetterState.replace(/(?:\r\n|\r|\n)/g, "<br>")}
           </div>
 
           {loadingState && (
             <span className="loading loading-spinner loading-lg"></span>
           )}
+
+          <PDFExporter coverLetter={coverLetterState} />
         </div>
       </div>
     </FormContextProvider>
