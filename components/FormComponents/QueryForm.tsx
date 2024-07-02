@@ -53,6 +53,8 @@ export default function QueryForm() {
       [e.target.name]: e.target.value,
     });
   };
+  // convert string into array so we can accurately add line breaks
+  const stringArr = coverLetterState.split("\n");
   return (
     <FormContextProvider>
       <div className="flex justify-between container mx-auto text-slate-700 gap-[5rem]">
@@ -78,7 +80,13 @@ export default function QueryForm() {
           <ApplicantData />
           <EmployerData />
           <div className="mt-8 bg-neutral card min-h-60 shadow w-full p-4 text-neutral-content">
-            {coverLetterState.replace(/(?:\r\n|\r|\n)/g, "<br>")}
+            {stringArr.map((item) => {
+              if (item.length <= 1) {
+                return <br />;
+              } else {
+                return <p>{item}</p>;
+              }
+            })}
           </div>
 
           {loadingState && (
