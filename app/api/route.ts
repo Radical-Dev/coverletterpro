@@ -7,7 +7,7 @@ const openai = new OpenAI({
 
 export async function POST(req: Request, res: Response) {
   const data = await req.json();
-  const resume = await readPDF();
+  const resume = await readPDF(data.urlPath);
 
   const completion = await openai.chat.completions.create({
     messages: [

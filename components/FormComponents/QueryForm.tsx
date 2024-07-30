@@ -5,18 +5,21 @@ import {
   Suspense,
   TextareaHTMLAttributes,
   createContext,
+  useContext,
 } from "react";
 import { FaPlusSquare } from "react-icons/fa";
 import ApplicantData from "./ApplicantData";
 import EmployerData from "./EmployerData";
 import FormContextProvider from "../Providers/FormContextProvider";
 import PDFExporter from "./PDFExporter";
+import { ResumePathContext } from "../Providers/ResumePathContextProvider";
 
 type formfields = {
   jobDescription?: string;
 };
 
 export default function QueryForm() {
+  const { urlPath, setUrlPath } = useContext(ResumePathContext);
   const [formState, setFormState] = useState<formfields>({});
   const [coverLetterState, setCoverLetterState] = useState("");
   const [loadingState, setLoadingState] = useState(false);
@@ -35,6 +38,7 @@ export default function QueryForm() {
       },
       body: JSON.stringify({
         message: formState.jobDescription,
+        urlPath: urlPath,
       }),
     };
 
